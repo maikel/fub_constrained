@@ -15,17 +15,10 @@ namespace fub
 
 namespace fub::constrain
 {
-	template <typename P, typename T>
-	concept bool Predicate() {
-		return requires (const P& pred, const T& value) {
-			{ pred(value) } noexcept -> ranges::Boolean;
-		};
-	}
-
 	// TODO Do I need std::add_lvalue_reference_t ?
 	//      Is this even being used with reference types ?
 	//      They are not regular!
-	template <typename EP, typename T, Predicate<T> P>
+	template <typename EP, typename T, ranges::Predicate<T> P>
 	concept bool ErrorPolicy() {
 		return ranges::Invocable<EP, T&, const T&, P>();
 	}
