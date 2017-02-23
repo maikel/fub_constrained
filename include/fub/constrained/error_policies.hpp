@@ -23,8 +23,8 @@ namespace fub::constrain
 		}
 	};
 
-	/// This policy throws an exception on constrain violation and leaves the
-	/// old value untouched.
+	/// \brief This policy throws an exception on constrain violation and leaves the
+	///        old value untouched.
 	template <typename Exception = std::logic_error>
 	struct throw_exception
 	{

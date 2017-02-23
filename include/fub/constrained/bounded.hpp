@@ -30,13 +30,13 @@ namespace fub
 		};
 	}
 
-	/// Bound Comparable Values in a half open range [Lower, Upper)
+	/// This bounds `Comparable` values in a half open range [Lower, Upper)
 	template <typename T, auto Lower, auto Upper>
 		requires ( ranges::ConvertibleTo<decltype(Lower), T>() )
 	using bounded = constrained<T, constrain::is_in_range<Lower, Upper>>;
 
-	/// If the default value is out of range we set the lower bound to be
-	/// the new default value
+	/// \brief If the default value is out of range we set the lower bound to be
+	///        the new default value
 	template <typename T, auto Lower, auto Upper>
 		requires(
 			ranges::ConvertibleTo<decltype(Lower), T>() &&

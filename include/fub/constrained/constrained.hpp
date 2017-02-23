@@ -11,19 +11,19 @@
 
 namespace fub::constrain
 {
-	/// This meta function is used, such that a user can define new default
-	/// values for its constrained value type.
+	/// \brief This meta function is used, such that a user can define new default
+	///        values for its constrained value type.
 	template <typename T>
 	struct default_value {
 		static constexpr T value = T{};
 	};
 
-	/// Specialize this class to indicate if a constrained type should not
-	/// have any default construction (no matter what)
+	/// \brief Specialize this class to indicate if a constrained type should not
+	///        have any default construction (no matter what)
 	template <typename T>
 	struct is_default_construcible : std::true_type {};
 
-	/// Check wether a given type is invocable with the given argument types
+	/// \brief Check wether a given type is invocable with the given argument types
 	template <typename T, typename... Args>
 	struct is_nothrow_invocable {
 		static constexpr bool value = noexcept (
@@ -31,8 +31,8 @@ namespace fub::constrain
 		);
 	};
 
-	/// Check wether a given type has a noexcept-member-function check which
-	/// is callable with Args...
+	/// \brief Check wether a given type has a noexcept-member-function check which
+	///        is callable with Args...
 	template <typename T, typename... Args>
 	struct is_nothrow_check {
 		static constexpr bool value = noexcept (
@@ -40,15 +40,16 @@ namespace fub::constrain
 		);
 	};
 
-	/// This is used to check if a given prvalue is constexpr evaluable.
+	/// \brief This function is used to check if a given prvalue is constexpr evaluable.
 	template <typename T> 
 	constexpr typename std::remove_reference<T>::type makeprval(T && t) {
 		return t;
 	}
 	#define isprvalconstexpr(e) noexcept(makeprval(e))
 
-	/// We use this type_trait to check whether a predicate is fulfilled for
-	/// given default value.
+	/// \brief We use this type_trait to check whether a predicate is fulfilled for
+	///        given default value.
+	///
 	/// If a) the predicate is not constexpr it returns true (fulfilled) and
 	///       thus the constrained type gets default constructible
 	///    b) the predicate *is* constexpr the trait evaluates it with the
@@ -63,8 +64,10 @@ namespace fub::constrain
 		static constexpr bool value = Pred{}(default_value<T>::value);
 	};
 
-	/// A thin wrapper around some regular value type which enforces some
-	/// constrain. We use empty base class optimization to make it a non-cost.
+	/// \brief A thin wrapper around some regular value type which enforces some
+	///        constraint.
+	/// 
+	/// We use empty base class optimization to make it a non-cost.
 	template <ranges::Regular T, ranges::Predicate<T> CP, ErrorPolicy<T, CP> EP>
 	class basic_constrained
 		: private CP

@@ -12,6 +12,7 @@ namespace fub
 {
 	namespace constrain
 	{
+		/// Returns true if the given value is not `nullptr`.
 		struct is_not_nullptr {
 			template <typename T>
 			constexpr bool operator()(T p) const noexcept
@@ -19,6 +20,7 @@ namespace fub
 		};
 	}
 
+	/// \typedef A vocabulary type to express non-nullness of pointers.
 	template <typename T>
 	using not_null = constrained<T, constrain::is_not_nullptr>;
 }
