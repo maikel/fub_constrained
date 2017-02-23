@@ -11,9 +11,11 @@
 namespace fub::constrain
 {
 	/// This policy terminates the program upon constrain failure.
-	struct terminate {
+	struct terminate
+	{
 		template <typename T, typename Pred>
-		void operator()(T&, const T& new_value, Pred pred) const noexcept
+		void operator()(T& old_value [[maybe_unused]], const T& new_value, Pred pred)
+		const noexcept
 		{
 			if (!std::invoke(pred, new_value)) {
 				std::terminate();
@@ -24,9 +26,10 @@ namespace fub::constrain
 	/// This policy throws an exception on constrain violation and leaves the
 	/// old value untouched.
 	template <typename Exception = std::logic_error>
-	struct throw_exception {
+	struct throw_exception
+	{
 		template <typename T, typename Pred>
-		void operator()(T&, const T& new_value, Pred pred) const
+		void operator()(T& old_value [[maybe_unused]], const T& new_value, Pred pred) const
 		{
 			if (!std::invoke(pred, new_value)) {
 				throw Exception{"Constrain Error."};

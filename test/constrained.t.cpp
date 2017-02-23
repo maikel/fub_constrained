@@ -51,3 +51,32 @@ TEST_CASE("Test some not_null semantics")
 	*ptr = 2;
 	REQUIRE( a == 2 );
 }
+
+TEST_CASE("bounded default ctor is flexible")
+{
+	SECTION("default is in range")
+	{
+		auto default_a = fub::constrain::default_value<fub::bounded<int, -1, 1>>::value;
+		REQUIRE(( fub::ranges::Same<decltype(default_a), int>() ));
+		REQUIRE( default_a == 0 );
+	}
+	SECTION("default is not in range")
+	{
+		auto default_b = fub::constrain::default_value<fub::bounded<int, 1, 3>>::value;
+		REQUIRE(( fub::ranges::Same<decltype(default_b), int>() ));
+		REQUIRE( default_b == 1 );
+	}
+	SECTION("is_in_range works")
+	{
+		REQUIRE(( fub::constrain::is_in_range<-1, 1>{}(0) ));
+		REQUIRE(( ! fub::constrain::is_in_range<1, 3>{}(0) ));
+	}
+	SECTION("This works!")
+	{
+		fub::bounded<int, 1, 3> b;
+		REQUIRE( b == 1 );
+
+		fub::bounded<int, -1, 1> a;
+		REQUIRE( a == 0 );
+	}
+}

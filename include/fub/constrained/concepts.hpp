@@ -29,6 +29,13 @@ namespace fub::constrain
 	concept bool ErrorPolicy() {
 		return ranges::Invocable<EP, T&, const T&, P>();
 	}
+
+	template <typename T, typename S>
+	concept bool LessThanComparable() {
+		return requires (const T& left, const T& right) {
+			{ left < right } -> ranges::Boolean;
+		};
+	}
 }
 
 #endif

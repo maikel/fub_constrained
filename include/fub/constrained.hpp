@@ -10,5 +10,6 @@
 #include "fub/constrained/functional.hpp"
 #include "fub/constrained/positive.hpp"
 #include "fub/constrained/not_null.hpp"
+#include "fub/constrained/bounded.hpp"
 
 #endif

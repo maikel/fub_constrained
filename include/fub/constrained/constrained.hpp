@@ -42,7 +42,7 @@ namespace fub::constrain
 
 	/// A thin wrapper around some regular value type which enforces some
 	/// constrain. We use empty base class optimization to make it a non-cost.
-	template <ranges::Regular T, Predicate<T> CP, ErrorPolicy<T, CP> EP>
+	template <ranges::Regular T, ranges::Predicate<T> CP, ErrorPolicy<T, CP> EP>
 	class basic_constrained
 		: private CP
 		, private EP
@@ -138,7 +138,7 @@ namespace fub
 
 	/// This is a convenient typedef. Default behaviour is to terminate the
 	/// program if the condition is broken.
-	template <ranges::Regular T, constrain::Predicate<T> Pred>
+	template <ranges::Regular T, ranges::Predicate<T> Pred>
 	using constrained = basic_constrained<T, Pred, constrain::terminate>;
 }
 
