@@ -13,10 +13,6 @@ namespace fub
 {
 	template <typename T>
 	using not_null = constrained<T, is_not_nullptr>;
-
-	/// mark not_null to not be default constructible
-	template <typename T>
-	struct constrain::is_default_construcible<not_null<T>> : std::false_type {};
 }
 
 #endif

@@ -37,10 +37,14 @@ TEST_CASE("positive gets initialized with 1")
 	REQUIRE( p == 1 );
 }
 
-TEST_CASE("not_null is not default constructible")
+TEST_CASE("not_null construction")
 {
-	REQUIRE( !std::is_default_constructible<fub::not_null<int*>>::value );
-	REQUIRE(( std::is_nothrow_constructible<fub::not_null<int*>, int*>::value ));
+	SECTION("is not default constructible") {
+		REQUIRE( !std::is_default_constructible<fub::not_null<int*>>::value );
+	}
+	SECTION("construction is noexcept") {
+		REQUIRE(( std::is_nothrow_constructible<fub::not_null<int*>, int*>::value ));
+	}
 }
 
 TEST_CASE("Test some not_null semantics")

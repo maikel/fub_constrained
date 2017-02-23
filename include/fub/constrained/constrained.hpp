@@ -19,7 +19,7 @@ namespace fub::constrain
 	};
 
 	/// Specialize this class to indicate if a constrained type should not
-	/// have any default construction
+	/// have any default construction (no matter what)
 	template <typename T>
 	struct is_default_construcible : std::true_type {};
 
@@ -38,6 +38,29 @@ namespace fub::constrain
 		static constexpr bool value = noexcept (
 				std::declval<T>().check(std::declval<Args>()...)
 		);
+	};
+
+	/// This is used to check if a given prvalue is constexpr evaluable.
+	template <typename T> 
+	constexpr typename std::remove_reference<T>::type makeprval(T && t) {
+		return t;
+	}
+	#define isprvalconstexpr(e) noexcept(makeprval(e))
+
+	/// We use this type_trait to check whether a predicate is fulfilled for
+	/// given default value.
+	/// If a) the predicate is not constexpr it returns true (fulfilled) and
+	///       thus the constrained type gets default constructible
+	///    b) the predicate *is* constexpr the trait evaluates it with the
+	///       default value and returns the result.
+	template <class Pred, class Default>
+	struct fulfills_predicate : std::true_type {};
+
+	template <class Pred, class T>
+	requires( isprvalconstexpr(( Pred{}(default_value<T>::value) )) )
+	struct fulfills_predicate<Pred, default_value<T>>
+	{
+		static constexpr bool value = Pred{}(default_value<T>::value);
 	};
 
 	/// A thin wrapper around some regular value type which enforces some
@@ -61,7 +84,9 @@ namespace fub::constrain
 		requires (
 				is_default_construcible<basic_constrained>::value &&
 				ranges::DefaultConstructible<constrain_policy>() &&
-				ranges::DefaultConstructible<error_policy>()
+				ranges::DefaultConstructible<error_policy>() &&
+				fulfills_predicate<constrain_policy, default_value<basic_constrained>>::value
+				// For non-constexpr predicates this is true (can not be checked in compile time)
 		)
 			: m_value{check(default_value<basic_constrained>::value)}
 		{}
