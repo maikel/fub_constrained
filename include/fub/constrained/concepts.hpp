@@ -28,7 +28,7 @@ namespace fub::constrain
 	template <typename EP, typename T, Predicate<T> P>
 	concept bool ErrorPolicy() {
 		return ranges::Invocable<EP, T&, const T&, P>();
-}
+	}
 }
 
 #endif

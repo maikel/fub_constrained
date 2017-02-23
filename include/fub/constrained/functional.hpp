@@ -3,8 +3,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef FUB_FUNCTIONAL_HPP
-#define FUB_FUNCTIONAL_HPP
+#ifndef FUB_CONSTRAINED_FUNCTIONAL_HPP
+#define FUB_CONSTRAINED_FUNCTIONAL_HPP
 
 namespace fub
 {

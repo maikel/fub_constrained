@@ -6,19 +6,16 @@
 #ifndef FUB_POSITIVE_HPP
 #define FUB_POSITIVE_HPP
 
-#include "fub/constrained.hpp"
-#include "fub/functional.hpp"
+#include "fub/constrained/constrained.hpp"
+#include "fub/constrained/functional.hpp"
 
 namespace fub
 {
 	template <typename T>
 	using positive = constrained<T, is_positive>;
-}
 
-namespace fub::constrain
-{
 	template <typename T>
-	struct default_value<positive<T>> {
+	struct constrain::default_value<positive<T>> {
 		static constexpr T value = T{1};
 	};
 }
