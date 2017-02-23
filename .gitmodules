@@ -1,0 +1,6 @@
+[submodule "third-library/cmcstl2"]
+	path = third-party/cmcstl2
+	url = https://github.com/CaseyCarter/cmcstl2.git
+[submodule "third-party/Catch"]
+	path = third-party/Catch
+	url = https://github.com/philsquared/Catch.git
