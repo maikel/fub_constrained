@@ -7,12 +7,20 @@
 #define FUB_CONSTRAINED_POSITIVE_HPP
 
 #include "fub/constrained/constrained.hpp"
-#include "fub/constrained/functional.hpp"
 
 namespace fub
 {
+	namespace constrain
+	{
+		struct is_positive {
+			template <typename T>
+			constexpr bool operator()(const T& x) const noexcept
+			{ return x > T{0}; }
+		};
+	}
+
 	template <typename T>
-	using positive = constrained<T, is_positive>;
+	using positive = constrained<T, constrain::is_positive>;
 
 	template <typename T>
 	struct constrain::default_value<positive<T>> {

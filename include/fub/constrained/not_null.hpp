@@ -7,12 +7,20 @@
 #define FUB_CONSTRAINED_NOT_NULL_HPP
 
 #include "fub/constrained/constrained.hpp"
-#include "fub/constrained/functional.hpp"
 
 namespace fub
 {
+	namespace constrain
+	{
+		struct is_not_nullptr {
+			template <typename T>
+			constexpr bool operator()(T p) const noexcept
+			{ return p != nullptr; }
+		};
+	}
+
 	template <typename T>
-	using not_null = constrained<T, is_not_nullptr>;
+	using not_null = constrained<T, constrain::is_not_nullptr>;
 }
 
 #endif
