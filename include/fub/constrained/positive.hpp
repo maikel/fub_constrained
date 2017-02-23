@@ -3,8 +3,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef FUB_POSITIVE_HPP
-#define FUB_POSITIVE_HPP
+#ifndef FUB_CONSTRAINED_POSITIVE_HPP
+#define FUB_CONSTRAINED_POSITIVE_HPP
 
 #include "fub/constrained/constrained.hpp"
 #include "fub/constrained/functional.hpp"
