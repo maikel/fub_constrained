@@ -70,9 +70,9 @@ namespace fub::constrain
 	/// We use empty base class optimization to make it a non-cost.
 	template <ranges::Regular T, ranges::Predicate<T> CP, ErrorPolicy<T, CP> EP>
 	class basic_constrained
-		: private CP
-		, private EP
+		: ranges::ext::compressed_pair<CP, EP>
 	{
+		using base = ranges::ext::compressed_pair<CP, EP>;
 	public:
 		using value_type       = T;
 		using const_reference  = const T&;
@@ -116,7 +116,7 @@ namespace fub::constrain
 		error_handler()
 		const noexcept
 		{
-			return static_cast<const error_policy&>(*this);
+			return static_cast<const error_policy&>(base::second());
 		}
 
 		/// Cast this class to its constrain_policy
@@ -124,7 +124,7 @@ namespace fub::constrain
 		constrain_handler()
 		const noexcept
 		{
-			return static_cast<const constrain_policy&>(*this);
+			return static_cast<const constrain_policy&>(base::first());
 		}
 
 		/// Returns the value which is stored
